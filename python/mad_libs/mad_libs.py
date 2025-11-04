@@ -15,3 +15,5 @@ line = line.replace('VERB', verb)
 line = line.replace('NOUN', noun_second)
 
 print(line)
+
+lines.close()
