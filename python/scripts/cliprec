@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+source ~/Scripts/.venv/bin/activate
+python3 ~/Scripts/cliprec.py
+read -p "Press any key to continue..." -n1 –s
+deactivate
