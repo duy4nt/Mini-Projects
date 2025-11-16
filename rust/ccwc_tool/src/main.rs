@@ -8,18 +8,12 @@ fn main() {
     let query = &args[1];
     let filename = &args[2].to_string();
 
-    let byte_command: &str = "-w";
+    let commands: [&str; 4] = ["c", "l", "w", "m"];
     
-    println!("{byte_command}");
+    println!("{:?}", commands);
 
-    match query {
-         byte_command => {
-            println!("Calculating the number of words in the file"),
-        }
-        _ => {
-            println!("Damn! That's not implemented"),
-        }
-    
+    if query == commands[2] {
+        println!("It workssssssssss");
     }
 
 }
