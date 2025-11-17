@@ -1,5 +1,5 @@
-   0.126886300s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: false }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
-   0.126951200s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-fc84a924cf008e09\bin-ccwc_tool`
+   0.235985800s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: false }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
+   0.236092700s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-fc84a924cf008e09\bin-ccwc_tool`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -26,8 +26,8 @@ Stack backtrace:
   18: git_midx_writer_dump
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
-   0.160409400s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: true }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
-   0.160449500s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-0d3e035ed166cfff\test-bin-ccwc_tool`
+   0.326895100s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: true }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
+   0.326931700s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-0d3e035ed166cfff\test-bin-ccwc_tool`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -55,6 +55,6 @@ Stack backtrace:
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
     Checking ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)
-error: could not compile `ccwc_tool` (bin "ccwc_tool") due to 1 previous error
-warning: build failed, waiting for other jobs to finish...
 error: could not compile `ccwc_tool` (bin "ccwc_tool" test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `ccwc_tool` (bin "ccwc_tool") due to 1 previous error

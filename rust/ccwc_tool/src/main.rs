@@ -1,7 +1,6 @@
 use std::env;
 use std::fs;
 use std::process;
-use std::result;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -17,13 +16,6 @@ fn main() {
 struct Config {
     query: String,
     filename: String,
-}
-
-fn parse_config(args: &[String]) -> Config {
-    let query = args[1].clone();
-    let filename = args[2].clone();
-
-    Config { query, filename }
 }
 
 impl Config {
@@ -46,16 +38,16 @@ fn logic(config: Config) {
         print_bytes(&config.filename);
     } else if config.query == commands[1] {
         println!("Calculating the number of lines in the {}", config.filename);
-        print_bytes(&config.filename);
+        print_lines(&config.filename);
     } else if config.query == commands[2] {
         println!("Calculating the number of words in the {}", config.filename);
-        print_bytes(&config.filename);
+        print_words(&config.filename);
     } else if config.query == commands[3] {
         println!(
             "Calculating the number of characters in the {}",
             config.filename
         );
-        print_bytes(&config.filename);
+        print_characters(&config.filename);
     } else {
         println!("Damn! That shi is not implemented.");
     }
