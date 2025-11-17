@@ -62,17 +62,45 @@ fn logic(config: Config) {
 }
 
 fn print_bytes(filename: &str) {
-    println!("{:?}", filename);
+    println!("Reading the content from the filename {:?}", filename);
+    let content = fs::read_to_string(filename).expect("Failed to read the line");
+    // println!("{content}");
+    // println!("{:?}", filename);
+    println!(
+        "The number of bytes in the file are {}",
+        content.as_bytes().iter().count()
+    );
 }
 
 fn print_lines(filename: &str) {
-    println!("{:?}", filename);
+    println!("Reading the content from the filename {:?}", filename);
+    let content = fs::read_to_string(filename).expect("Failed to read the line");
+    // println!("{content}");
+    // println!("{:?}", filename);
+    println!(
+        "The number of lines in the file are {}",
+        content.lines().count()
+    );
 }
 
 fn print_words(filename: &str) {
-    println!("{:?}", filename);
+    println!("Reading the content from the filename {:?}", filename);
+    let content = fs::read_to_string(filename).expect("Failed to read the line");
+    // println!("{content}");
+    // println!("{:?}", filename);
+    println!(
+        "The number of words in the file are {}",
+        content.split_whitespace().count()
+    );
 }
 
 fn print_characters(filename: &str) {
-    println!("{:?}", filename);
+    println!("Reading the content from the filename {:?}", filename);
+    let content = fs::read_to_string(filename).expect("Failed to read the line");
+    // println!("{content}");
+    // println!("{:?}", filename);
+    println!(
+        "The number of character in the file are {}",
+        content.chars().count()
+    );
 }
