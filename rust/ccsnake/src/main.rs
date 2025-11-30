@@ -1,4 +1,11 @@
+use bevy::time::common_conditions::*;
+use bevy::window::WindowResolution;
 use bevy::{picking::window, prelude::*, window::PrimaryWindow};
+use core::time::Duration;
+use rand::prelude::random;
+
+#[derive(Component)]
+struct Food;
 
 #[derive(Component)]
 struct SnakeHead;
@@ -7,6 +14,14 @@ struct SnakeHead;
 struct Position {
     x: i32,
     y: i32,
+}
+
+#[derive(Component)]
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 #[derive(Component)]
@@ -24,34 +39,37 @@ impl Size {
     }
 }
 
+const FOOD_COLOR: Color = Color::srgb(1.0, 1.0, 1.0);
 const ARENA_WIDTH: u32 = 10;
 const ARENA_HEIGHT: u32 = 10;
 const SNAKE_HEAD_COLOR: Color = Color::srgb(0.7, 0.7, 0.7);
+//const SNAKE_SPEED: Duration = Duration::from_secs_f32(1.0 / 6.0);
 
 fn setup_camera(mut commands: Commands) {
     commands.spawn(Camera2d);
 }
 
 fn spawn_snake(mut commands: Commands) {
-    commands
-        .spawn((
-            Sprite {
-                color: SNAKE_HEAD_COLOR,
-                custom_size: Some(Vec2::new(10.0, 10.0)),
-                ..default()
-            },
-            Transform::default(),
-            SnakeHead,
-        ))
-        .insert(SnakeHead)
-        .insert(Position { x: 3, y: 3 })
-        .insert(Size::square(0.8));
+    println!("Spawning Snek!");
+    commands.spawn((
+        Sprite {
+            color: SNAKE_HEAD_COLOR,
+            ..default()
+        },
+        Transform::default(),
+        SnakeHead,
+        Position { x: 3, y: 3 },
+        Size::square(0.8),
+        Direction::Up,
+    ));
+    println!("Snek Spawned");
 }
 
 fn snake_movement(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut head_positions: Query<&mut Transform, With<SnakeHead>>,
 ) {
+    println!("Snek Move!");
     for mut transform in head_positions.iter_mut() {
         if keyboard_input.pressed(KeyCode::ArrowLeft) {
             transform.translation.x -= 2.0;
@@ -72,6 +90,7 @@ fn size_scaling(
     window_query: Query<&Window, With<PrimaryWindow>>,
     mut q: Query<(&Size, &mut Transform)>,
 ) {
+    println!("Size Scaling");
     let Ok(window) = window_query.single() else {
         return;
     };
@@ -105,13 +124,39 @@ fn position_translation(
     }
 }
 
+fn food_spawner(mut commands: Commands) {
+    println!("Spawning Food!");
+    let x = (random::<f32>() * ARENA_WIDTH as f32) as i32;
+    let y = (random::<f32>() * ARENA_HEIGHT as f32) as i32;
+    commands.spawn((
+        Sprite {
+            color: FOOD_COLOR,
+            ..default()
+        },
+        Food,
+        Position { x, y },
+        Size::square(0.8),
+    ));
+    println!("Food Spawned at ({}, {})", x, y);
+}
+
 fn main() {
     println!("Hello, world!");
     App::new()
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                resolution: WindowResolution::new(800, 600),
+                title: "Snek!".to_string(),
+                ..default()
+            }),
+            ..default()
+        }))
+        .insert_resource(ClearColor(Color::srgb(0.04, 0.04, 0.04)))
         .add_systems(Startup, setup_camera)
         .add_systems(Startup, spawn_snake)
+        .add_systems(Startup, food_spawner)
         .add_systems(Update, snake_movement)
         .add_systems(PostUpdate, (position_translation, size_scaling))
         .run();
+    println!("App finished");
 }
