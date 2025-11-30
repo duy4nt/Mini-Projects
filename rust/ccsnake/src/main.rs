@@ -1,8 +1,11 @@
-use bevy::time::common_conditions::*;
-use bevy::window::WindowResolution;
-use bevy::{picking::window, prelude::*, window::PrimaryWindow};
-use core::time::Duration;
-use rand::prelude::random;
+use bevy::prelude::*;
+use rand::Rng;
+use std::collections::VecDeque;
+
+const GRID_WIDTH: i32 = 20;
+const GRID_HEIGHT: i32 = 20;
+const CELL_SIZE: f32 = 30.0;
+const INITIAL_SPEED: f32 = 0.15;
 
 #[derive(Component)]
 struct Food;
@@ -10,13 +13,16 @@ struct Food;
 #[derive(Component)]
 struct SnakeHead;
 
-#[derive(Component, Clone, Copy, PartialEq, Eq)]
-struct Position {
+#[dervie(Component)]
+struct SnakeSegment;
+
+#[derive(Component)]
+struct GridPosition {
     x: i32,
     y: i32,
 }
 
-#[derive(Component)]
+#[derive(PartialEq, Clone, Copy)]
 enum Direction {
     Up,
     Down,
@@ -24,45 +30,97 @@ enum Direction {
     Right,
 }
 
-#[derive(Component)]
-struct Size {
-    width: f32,
-    height: f32,
-}
-
-impl Size {
-    pub fn square(x: f32) -> Self {
-        Self {
-            width: x,
-            height: x,
+impl Direction {
+    fn opposite(&self) -> Self {
+        match self {
+            Direction::Up => Direction::Down,
+            Direction::Down => Direction::Up,
+            Direction::Left => Direction::Right,
+            Direction::Right => Direction::Left,
         }
     }
 }
 
-const FOOD_COLOR: Color = Color::srgb(1.0, 1.0, 1.0);
-const ARENA_WIDTH: u32 = 10;
-const ARENA_HEIGHT: u32 = 10;
-const SNAKE_HEAD_COLOR: Color = Color::srgb(0.7, 0.7, 0.7);
-//const SNAKE_SPEED: Duration = Duration::from_secs_f32(1.0 / 6.0);
-
-fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2d);
+#[derive(Resources)]
+struct GameSatate {
+    snake_body: VecDeque<GridPosition>,
+    direction: Direction,
+    next_direction: Direction,
+    move_timer: Timer,
+    score: u32,
+    game_over: bool,
 }
 
-fn spawn_snake(mut commands: Commands) {
-    println!("Spawning Snek!");
+impl Default for GameSatate {
+    fn default() -> Self {
+        let mut body = VecDeque::new();
+        body.push_back(GridPosition {
+            x: GRID_WIDTH / 2,
+            y: GRID_HEIGHT / 2,
+        });
+        body.push_back(GridPosition {
+            x: GRID_WIDTH / 2 - 1,
+            y: GRID_HEIGHT / 2,
+        });
+
+        Self {
+            snake_body: body,
+            direction: Direction::Up,
+            next_direction: Direction::Up,
+            move_timer: Timer::from_seconds(INITIAL_SPEED, TimerMode::Repeating),
+            score: 0,
+            game_over: false,
+        }
+    }
+}
+
+fn setup(mut commands: Commands, game_state: Res<GameSatate>) {
+    commands.spawn(Camera2d);
+
+    for pos in &game_state.snake_body {
+        spawn_snake_segment(&mut commands, pos);
+    }
+
+    spawn_food(&mut commands);
+}
+
+fn spawn_snake_segment(commands: &mut Commands, pos: &GridPosition) {
     commands.spawn((
         Sprite {
-            color: SNAKE_HEAD_COLOR,
+            color: Color::srgb(0.2, 0.8, 0.2),
+            custom_size: Some(Vec2::splat(CELL_SIZE - 2.0)),
             ..default()
         },
-        Transform::default(),
-        SnakeHead,
-        Position { x: 3, y: 3 },
-        Size::square(0.8),
-        Direction::Up,
+        Transform::from_translation(grid_to_world(pos.x, pos.y)),
+        SnakeSegment,
+        GridPosition { x: pos.x, y: pos.y },
     ));
-    println!("Snek Spawned");
+}
+
+fn spawn_food(commands: &mut Commmands) {
+    let mut rng = rand::thread_rng();
+
+    let x = rng.gen_range(0, GRID_WIDTH);
+    let y: i32 = rng.gen_range(0, GRID_HEIGHT);
+
+    commands.spawn((
+        Sprite {
+            color: Color::srgb(0.9, 0.1, 0.1),
+            custom_size: Some(Vec2::splat(CELL_SIZE - 4.0)),
+            ..default()
+        },
+        Transform::from_translation(grid_to_world(x, y)),
+        Food,
+        GridPosition { x, y },
+    ))
+}
+
+fn grid_to_world(x: i32, y: i32) -> Vec3 {
+    Vec3::new(
+        (x as f32 - GRID_WIDTH as f32 / 2.0 + 0.5) * CELL_SIZE,
+        (y as f32 - GRID_HEIGHT as f32 / 2.0 + 0.5) * CELL_SIZE,
+        0.0,
+    )
 }
 
 fn snake_movement(
@@ -122,22 +180,6 @@ fn position_translation(
             0.0,
         );
     }
-}
-
-fn food_spawner(mut commands: Commands) {
-    println!("Spawning Food!");
-    let x = (random::<f32>() * ARENA_WIDTH as f32) as i32;
-    let y = (random::<f32>() * ARENA_HEIGHT as f32) as i32;
-    commands.spawn((
-        Sprite {
-            color: FOOD_COLOR,
-            ..default()
-        },
-        Food,
-        Position { x, y },
-        Size::square(0.8),
-    ));
-    println!("Food Spawned at ({}, {})", x, y);
 }
 
 fn main() {
