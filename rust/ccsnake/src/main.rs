@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{input::keyboard::Key, prelude::*};
 use rand::Rng;
 use std::collections::VecDeque;
 
@@ -123,23 +123,29 @@ fn grid_to_world(x: i32, y: i32) -> Vec3 {
     )
 }
 
-fn snake_movement(
-    keyboard_input: Res<ButtonInput<KeyCode>>,
-    mut head_positions: Query<&mut Transform, With<SnakeHead>>,
-) {
-    println!("Snek Move!");
-    for mut transform in head_positions.iter_mut() {
-        if keyboard_input.pressed(KeyCode::ArrowLeft) {
-            transform.translation.x -= 2.0;
+fn handle_input(keyboard: Res<ButtonInput<KeyCode>>, mut game_state: ResMut<GameState>) {
+    if game_state.game_over {
+        if keyboard.just_pressed(KeyCode::Space) {
+            *game_state = GameState::default();
         }
-        if keyboard_input.pressed(KeyCode::ArrowRight) {
-            transform.translation.x += 2.0;
-        }
-        if keyboard_input.pressed(KeyCode::ArrowUp) {
-            transform.translation.y += 2.0;
-        }
-        if keyboard_input.pressed(KeyCode::ArrowDown) {
-            transform.translation.y -= 2.0;
+        return;
+    }
+
+    let new_diection = if keyboard.just_pressed(KeyCode::ArrowUp) {
+        Some(Direction::Up)
+    } else if keyboard.just_pressed(KeyCode::ArrowDown) {
+        Some(Direction::Down)
+    } else if keyboard.just_pressed(KeyCode::ArrowRight) {
+        Some(Direction::Right)
+    } else if keyboard.just_pressed(KeyCode::AltLeft) {
+        Some(Direction::Left)
+    } else {
+        None
+    };
+
+    if let Some(dir) = new_direction {
+        if dir != game_state.direction.opposite() {
+            game_state.next_direction = dir;
         }
     }
 }
