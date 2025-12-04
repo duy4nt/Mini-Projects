@@ -2,6 +2,7 @@ use std::io::{self, Write};
 
 fn main() {
     loop {
+        let mut position_counter: usize = 0;
         print!("$ ");
         let mut input: String = String::new();
         io::stdout().flush().unwrap();
@@ -13,10 +14,16 @@ fn main() {
         if input[0] == "exit" {
             break;
         } else if input[0] == "echo" {
-            println!("{:?} some", input);
+            for stuff in input {
+                position_counter += 1;
+                if position_counter == 1 {
+                    continue;
+                }
+                print!("{} ", stuff);
+            }
+            println!("");
         } else {
             println!("{}: command not found", input[0]);
         }
     }
 }
-
