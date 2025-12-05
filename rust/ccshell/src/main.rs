@@ -1,6 +1,7 @@
 use std::io::{self, Write};
 
 fn main() {
+    let commads = ["exit", "echo"];
     loop {
         let mut position_counter: usize = 0;
         print!("$ ");
@@ -22,6 +23,12 @@ fn main() {
                 print!("{} ", stuff);
             }
             println!("");
+        } else if input[0] == "type" {
+            if commads.contains(&input[1]) {
+                println!("{} is a shell builtin", input[1]);
+            } else {
+                println!("{}: not found", input[1]);
+            }
         } else {
             println!("{}: command not found", input[0]);
         }
