@@ -1,8 +1,10 @@
 use std::io::{self, Write};
+use std::path;
+use std::{env, fs};
 
 fn main() {
     let commads = ["exit", "echo"];
-    loop {
+    'outer: loop {
         let mut position_counter: usize = 0;
         print!("$ ");
         let mut input: String = String::new();
@@ -27,6 +29,16 @@ fn main() {
             if commads.contains(&input[1]) {
                 println!("{} is a shell builtin", input[1]);
             } else {
+                let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
+                for dir in env::split_paths(&env_path) {
+                    let path = dir.join(input[1]);
+                    if let Ok(metadata) = fs::metadata(&path) {
+                        if metadata.is_file() && metadata.permissions().mode() & 0o111 != 0 {
+                            println!("{}", path.display());
+                            continue 'outer;
+                        }
+                    }
+                }
                 println!("{}: not found", input[1]);
             }
         } else {
