@@ -42,6 +42,21 @@ fn main() {
                 println!("{}: not found", input[1]);
             }
         } else {
+            let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
+            for dir in env::split_paths(&env_path) {
+                let path = dir.join(input[0]);
+                if let Ok(metadata) = fs::metadata(&path) {
+                    if metadata.is_file() && metadata.permissions().mode() & 0o111 != 0 {
+                        let output = Command::new(input[0])
+                            .arg(input[1])
+                            .arg(input[2])
+                            .output()
+                            .expect("Failed to execut the file");
+                        println!("{}", String::from_utf8_lossy(&output.stdout));
+                        continue 'outer;
+                    }
+                }
+            }
             println!("{}: command not found", input[0]);
         }
     }
