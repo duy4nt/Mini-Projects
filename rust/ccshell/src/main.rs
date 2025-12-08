@@ -47,6 +47,16 @@ fn main() {
             let current_dir = env::current_dir().expect("Failed to get the current directory");
             println!("{}", current_dir.display());
         } else if input[0] == "cd" {
+            let mut current_dir = env::current_dir().expect("Failed to get the current directory");
+            if input[1]
+                .chars()
+                .nth(0)
+                .expect("Failed to get the first element")
+                == '/'
+            {
+                let _ = env::set_current_dir(input[1]).is_ok();
+                current_dir = input[1].into();
+            }
         } else {
             let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
             for dir in env::split_paths(&env_path) {
