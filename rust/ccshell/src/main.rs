@@ -5,7 +5,7 @@ use std::process::Command;
 use std::{env, fs};
 
 fn main() {
-    let commads = ["exit", "echo"];
+    let commads = ["exit", "echo", "type", "pwd", "cd"];
     'outer: loop {
         let mut position_counter: usize = 0;
         print!("$ ");
@@ -43,6 +43,10 @@ fn main() {
                 }
                 println!("{}: not found", input[1]);
             }
+        } else if input[0] == "pwd" {
+            let current_dir = env::current_dir().expect("Failed to get the current directory");
+            println!("{}", current_dir.display());
+        } else if input[0] == "cd" {
         } else {
             let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
             for dir in env::split_paths(&env_path) {
@@ -53,7 +57,10 @@ fn main() {
                             .args(&input[1..])
                             .output()
                             .expect("Failed to execut the file");
-                        print!("{}", String::from_utf8_lossy(&output.stdout).trim_end());
+                        print!(
+                            "{}",
+                            String::from_utf8_lossy(&output.stdout).trim_end_matches("\n")
+                        );
                         continue 'outer;
                     }
                 }
