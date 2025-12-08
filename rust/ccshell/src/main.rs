@@ -1,5 +1,7 @@
 use std::io::{self, Write};
+use std::os::unix::fs::PermissionsExt;
 use std::path;
+use std::process::Command;
 use std::{env, fs};
 
 fn main() {
@@ -48,11 +50,10 @@ fn main() {
                 if let Ok(metadata) = fs::metadata(&path) {
                     if metadata.is_file() && metadata.permissions().mode() & 0o111 != 0 {
                         let output = Command::new(input[0])
-                            .arg(input[1])
-                            .arg(input[2])
+                            .args(&input[1..])
                             .output()
                             .expect("Failed to execut the file");
-                        println!("{}", String::from_utf8_lossy(&output.stdout));
+                        print!("{}", String::from_utf8_lossy(&output.stdout).trim_end());
                         continue 'outer;
                     }
                 }
