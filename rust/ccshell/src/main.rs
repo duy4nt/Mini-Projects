@@ -54,8 +54,52 @@ fn main() {
                 .expect("Failed to get the first element")
                 == '/'
             {
-                let _ = env::set_current_dir(input[1]).is_ok();
+                let ffs = match env::set_current_dir(input[1]) {
+                    Ok(p) => p,
+                    Err(error) => println!("{}: {}: No such file or directory", input[0], input[1]),
+                };
                 current_dir = input[1].into();
+            }
+            if input[1]
+                .chars()
+                .nth(0)
+                .expect("Faield to get the first element")
+                == '.'
+                && input[1]
+                    .chars()
+                    .nth(1)
+                    .expect("Faield to get the second element")
+                    == '/'
+            {
+                let to_add = input[1];
+                // Error: doesn't have a size known at compile-time
+                current_dir = current_dir.join(to_add[2..]);
+                let ffs = match env::set_current_dir(current_dir) {
+                    Ok(p) => p,
+                    Err(error) => println!("No such file or directory"),
+                };
+            }
+            if input[1]
+                .chars()
+                .nth(0)
+                .expect("Failed to get the first element")
+                == "."
+                && input[1]
+                    .chars()
+                    .nth(1)
+                    .expect("Failed to get the second element")
+                    == "."
+            {
+                //TODO: move to parent dir
+            }
+            if input[1]
+                .chars()
+                .nth(1)
+                .expect("Failed to get the first element")
+                == "~"
+            {
+                current_dir = "/home";
+                env::set_current_dir("/home");
             }
         } else {
             let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
