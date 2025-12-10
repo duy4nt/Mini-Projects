@@ -72,7 +72,7 @@ fn main() {
                     == '/'
             {
                 let to_add = input[1];
-                // Error: doesn't have a size known at compile-time
+                // Error: still doesn't have a size known at compile-time
                 current_dir = current_dir.join(to_add[2..]);
                 let ffs = match env::set_current_dir(current_dir) {
                     Ok(p) => p,
@@ -83,12 +83,12 @@ fn main() {
                 .chars()
                 .nth(0)
                 .expect("Failed to get the first element")
-                == "."
+                == '.'
                 && input[1]
                     .chars()
                     .nth(1)
                     .expect("Failed to get the second element")
-                    == "."
+                    == '.'
             {
                 //TODO: move to parent dir
             }
@@ -96,10 +96,10 @@ fn main() {
                 .chars()
                 .nth(1)
                 .expect("Failed to get the first element")
-                == "~"
+                == '~'
             {
-                current_dir = "/home";
-                env::set_current_dir("/home");
+                current_dir = "/home".into();
+                env::set_current_dir("/home").is_ok();
             }
         } else {
             let env_path = env::var_os("PATH").expect("Failed to get the PATH value");
