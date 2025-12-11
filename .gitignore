@@ -1,2 +1,6 @@
 rust/ccsnake/target
 rust/ccshell/target
+rust/ccjson_parser/target
+rust/ccshell/target
+rust/ccsnake/target
+rust/ccspace_invaders
