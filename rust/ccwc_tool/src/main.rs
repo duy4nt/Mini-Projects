@@ -14,10 +14,10 @@ fn main() {
 }
 
 enum Commands {
-    c,
-    l,
-    w,
-    m,
+    C,
+    L,
+    W,
+    M,
 }
 
 struct Config {
@@ -31,17 +31,17 @@ impl Config {
             return Err("Not enough arguments");
         }
 
-        let commands_option = match args[1] {
-            "c" => Some(Commands::c),
-            "l" => Some(Commands::l),
-            "w" => Some(Commands::w),
-            "m" => Some(Commands::m),
+        let commands_option = match args[1].as_str() {
+            "c" => Some(Commands::C),
+            "l" => Some(Commands::L),
+            "w" => Some(Commands::W),
+            "m" => Some(Commands::M),
             _ => None,
         };
 
         let commands: Commands = match commands_option {
             Some(commands) => commands,
-            None => Err("Invalid color"),
+            None => return Err("Invalid command"),
         };
 
         let filename = args[2].clone();
@@ -51,19 +51,19 @@ impl Config {
 
 fn logic(config: Config) {
     match config.commands {
-        Commands::c => {
+        Commands::C => {
             println!("Calculating the number of bytes in the {}", config.filename);
             print_bytes(&config.filename);
         }
-        Commands::l => {
+        Commands::L => {
             println!("Calculating the number of lines in the {}", config.filename);
             print_lines(&config.filename);
         }
-        Commands::w => {
+        Commands::W => {
             println!("Calculating the number of words in the {}", config.filename);
             print_words(&config.filename);
         }
-        Commands::m => {
+        Commands::M => {
             println!(
                 "Calcukating the number of characters in the {}",
                 config.filename
