@@ -13,8 +13,15 @@ fn main() {
     logic(config);
 }
 
+enum Commands {
+    c,
+    l,
+    w,
+    m,
+}
+
 struct Config {
-    query: String,
+    commands: Commands,
     filename: String,
 }
 
@@ -24,32 +31,45 @@ impl Config {
             return Err("Not enough arguments");
         }
 
-        let query = args[1].clone();
+        let commands_option = match args[1] {
+            "c" => Some(Commands::c),
+            "l" => Some(Commands::l),
+            "w" => Some(Commands::w),
+            "m" => Some(Commands::m),
+            _ => None,
+        };
+
+        let commands: Commands = match commands_option {
+            Some(commands) => commands,
+            None => Err("Invalid color"),
+        };
+
         let filename = args[2].clone();
-        Ok(Config { query, filename })
+        Ok(Config { commands, filename })
     }
 }
 
 fn logic(config: Config) {
-    let commands: [&str; 4] = ["c", "l", "w", "m"];
-
-    if config.query == commands[0] {
-        println!("Calculating the number of bytes in the {}", config.filename);
-        print_bytes(&config.filename);
-    } else if config.query == commands[1] {
-        println!("Calculating the number of lines in the {}", config.filename);
-        print_lines(&config.filename);
-    } else if config.query == commands[2] {
-        println!("Calculating the number of words in the {}", config.filename);
-        print_words(&config.filename);
-    } else if config.query == commands[3] {
-        println!(
-            "Calculating the number of characters in the {}",
-            config.filename
-        );
-        print_characters(&config.filename);
-    } else {
-        println!("Damn! That shi is not implemented.");
+    match config.commands {
+        Commands::c => {
+            println!("Calculating the number of bytes in the {}", config.filename);
+            print_bytes(&config.filename);
+        }
+        Commands::l => {
+            println!("Calculating the number of lines in the {}", config.filename);
+            print_lines(&config.filename);
+        }
+        Commands::w => {
+            println!("Calculating the number of words in the {}", config.filename);
+            print_words(&config.filename);
+        }
+        Commands::m => {
+            println!(
+                "Calcukating the number of characters in the {}",
+                config.filename
+            );
+            print_characters(&config.filename);
+        }
     }
 }
 

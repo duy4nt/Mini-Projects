@@ -1,5 +1,5 @@
-   0.235985800s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: false }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
-   0.236092700s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-fc84a924cf008e09\bin-ccwc_tool`
+   0.136434200s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: false }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
+   0.136480400s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-fc84a924cf008e09\bin-ccwc_tool`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -26,8 +26,8 @@ Stack backtrace:
   18: git_midx_writer_dump
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
-   0.326895100s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: true }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
-   0.326931700s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-0d3e035ed166cfff\test-bin-ccwc_tool`
+   0.159267700s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint: fingerprint error for ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool)/Check { test: true }/TargetInner { name: "ccwc_tool", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccwc_tool\\src\\main.rs", Edition2024) }
+   0.159296100s  INFO prepare_target{force=false package_id=ccwc_tool v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool) target="ccwc_tool"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccwc_tool\target\debug\.fingerprint\ccwc_tool-0d3e035ed166cfff\test-bin-ccwc_tool`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
