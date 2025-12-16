@@ -1,5 +1,5 @@
-   0.115593500s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint: fingerprint error for ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser)/Check { test: false }/TargetInner { name: "ccjson_parser", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccjson_parser\\src\\main.rs", Edition2024) }
-   0.116247700s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser\target\debug\.fingerprint\ccjson_parser-e9e4201979c48cca\bin-ccjson_parser`
+   0.084341900s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint: fingerprint error for ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser)/Check { test: false }/TargetInner { name: "ccjson_parser", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccjson_parser\\src\\main.rs", Edition2024) }
+   0.084387200s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser\target\debug\.fingerprint\ccjson_parser-e9e4201979c48cca\bin-ccjson_parser`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -26,8 +26,8 @@ Stack backtrace:
   18: git_midx_writer_dump
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
-   0.147917700s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint: fingerprint error for ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser)/Check { test: true }/TargetInner { name: "ccjson_parser", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccjson_parser\\src\\main.rs", Edition2024) }
-   0.147946200s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser\target\debug\.fingerprint\ccjson_parser-b76fc16bcab50a1a\test-bin-ccjson_parser`
+   0.107024300s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint: fingerprint error for ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser)/Check { test: true }/TargetInner { name: "ccjson_parser", doc: true, ..: with_path("\\\\wsl.localhost\\Ubuntu\\home\\dragon\\mini_projects\\rust\\ccjson_parser\\src\\main.rs", Edition2024) }
+   0.107046400s  INFO prepare_target{force=false package_id=ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser) target="ccjson_parser"}: cargo::core::compiler::fingerprint:     err: failed to read `\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser\target\debug\.fingerprint\ccjson_parser-b76fc16bcab50a1a\test-bin-ccjson_parser`
 
 Caused by:
     The system cannot find the file specified. (os error 2)
@@ -55,6 +55,6 @@ Stack backtrace:
   19: BaseThreadInitThunk
   20: RtlUserThreadStart
     Checking ccjson_parser v0.1.0 (\\wsl.localhost\Ubuntu\home\dragon\mini_projects\rust\ccjson_parser)
-error: could not compile `ccjson_parser` (bin "ccjson_parser" test) due to 1 previous error
-warning: build failed, waiting for other jobs to finish...
 error: could not compile `ccjson_parser` (bin "ccjson_parser") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `ccjson_parser` (bin "ccjson_parser" test) due to 1 previous error
