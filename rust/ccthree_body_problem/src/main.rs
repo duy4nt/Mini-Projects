@@ -95,7 +95,6 @@ fn calculate_acceleration(
             let distance = (dx * dx + dy * dy).sqrt();
 
             let acc_mag = GRAVITATION_CONST * current_mass * other_mass / distance * distance;
-            //TODO: Change the acc_mag from a constant to now depend on mass.
             if distance > 0.1 {
                 acceleration.x += (dx / distance) * acc_mag;
                 acceleration.y += (dy / distance) * acc_mag;
