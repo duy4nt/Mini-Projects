@@ -4,3 +4,4 @@ rust/ccjson_parser/target
 rust/ccspace_invaders/target
 rust/ccwc_tool/target
 rust/ccthree_body_problem/target
+java/intereter/src/lox/*.class
