@@ -1,6 +1,18 @@
 package lox;
 
+import javax.management.RuntimeErrorException;
+
 public class Interpreter implements Expr.Visitor<Object> {
+
+    void interpret(Expr expression) {
+        try {
+            Object value = evaluate(expression);
+            System.out.println(stringify(value));
+        } catch (RuntimeError error) {
+            Lox.runtimeError(error);
+        }
+    }
+
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
         return expr.value;
@@ -19,10 +31,23 @@ public class Interpreter implements Expr.Visitor<Object> {
             case BANG:
                 return !isTruthly(right);
             case MINUS:
+                checkNumberOperand(expr.operator, right);
                 return -(double) right;
         }
 
         return null;
+    }
+
+    private void checkNumberOperand(Token operator, Object operand) {
+        if (operand instanceof Double) return;
+
+        throw new RuntimeError(operator, "Operand must be a number");
+    }
+
+    private void checkNumberOperands(Token operator, Object left, Object right) {
+        if (left instanceof Double && right instanceof Double) return;
+
+        throw new RuntimeError(operator, "Operands must be numbers");
     }
 
     private boolean isTruthly(Object object) {
@@ -39,6 +64,20 @@ public class Interpreter implements Expr.Visitor<Object> {
         return a.equals(b);
     }
 
+    private String stringify(Object object) {
+        if (object == null) return "nil";
+
+        if (object instanceof Double) {
+            String text = object.toString();
+            if (text.endsWith(".0")) {
+                text = text.substring(0, text.length() - 2);
+            }
+            return text;
+        }
+
+        return object.toString();
+    }
+
     private Object evaluate(Expr expr) {
         return expr.accept(this);
     }
@@ -50,18 +89,25 @@ public class Interpreter implements Expr.Visitor<Object> {
 
         switch (expr.operator.type) {
             case GREATER:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left > (double) right;
             case GREATER_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left >= (double) right;
             case LESS:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left < (double) right;
             case LESS_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left <= (double) right;
             case BANG_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
                 return !isEqual(left, right);
             case EQUAL_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
                 return isEqual(left, right);
             case MINUS:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left - (double) right;
             case PLUS:
                 if (left instanceof Double && right instanceof Double) {
@@ -71,10 +117,12 @@ public class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     return (String) left + (String) right;
                 }
-                break;
+                throw new RuntimeError(expr.operator, "Operands must be 2 numbers or 2 strings");
             case SLASH:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left / (double) right;
             case STAR:
+                checkNumberOperands(expr.operator, left, right);
                 return (double) left * (double) right;
         }
         return null;
