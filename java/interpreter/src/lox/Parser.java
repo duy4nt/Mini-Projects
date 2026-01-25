@@ -7,11 +7,23 @@ import lox.TokenType.*;
 import static lox.TokenType.*;
 
 public class Parser {
+
+    private static class ParseError extends RuntimeException {
+    }
+
     private final List<Token> tokens;
     private int current = 0;
 
     Parser(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    Expr parse() {
+        try {
+            return expression();
+        } catch (ParserError error) {
+            return null;
+        }
     }
 
     private Expr expression() {
@@ -85,6 +97,8 @@ public class Parser {
             consume(RIGHT_PAREN, "Expect ')' after the expression,");
             return new Expr.Grouping(expr);
         }
+
+        throw error(peek(), "Expect expression");
     }
 
     private boolean match(TokenType... types) {
@@ -95,6 +109,12 @@ public class Parser {
             }
         }
         return false;
+    }
+
+    private Token consume(TokenType type, String message) {
+        if (check(type)) return advance();
+
+        throw error(peek(), message);
     }
 
     private boolean check(TokenType type) {
@@ -117,5 +137,10 @@ public class Parser {
 
     private Token previous() {
         return tokens.get(current - 1);
+    }
+
+    private ParseError error(Token token, String message) {
+        Lox.error(token, message);
+        return new ParseError();
     }
 }
