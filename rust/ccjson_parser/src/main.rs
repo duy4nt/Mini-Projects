@@ -14,12 +14,6 @@ fn main() {
     } else {
         run_prompt();
     }
-    let file_object = File::open("valid.json");
-    let content = match file_object {
-        Ok(content) => content,
-        Err(error) => panic!("Problem: {}", error),
-    };
-    println!("{:?}", content);
 }
 
 fn run_file(path_string: &String) {
@@ -33,7 +27,7 @@ fn run_file(path_string: &String) {
     file_object
         .read_to_string(&mut content)
         .expect("Failed parsing the file");
-    run(&content);
+    run(&mut content);
 }
 
 fn run_prompt() {
@@ -44,16 +38,16 @@ fn run_prompt() {
         if buffer == "" {
             break;
         }
-        run(&buffer);
+        run(&mut buffer);
     }
 }
 
-fn run(source : &String) {
-    let lex: Lexer = Lexer::new();
+fn run(source : &mut String) {
+    let lex: Lexer = Lexer::new(&mut source);
     let tokens: Vec<tokens> = lex.scanTokens();
 
     for  token in tokens {
-        println!("{:?}", token);
+        println!("{}", token);
     }
 }
 
@@ -64,29 +58,29 @@ fn lexer() {
 // TODO: Parser
 
 enum token_type {
-    None,
     Bool,
     Number,
     String,
+    EOF,
 }
 
 enum token {
-    type: token_type,
+    ttype: token_type,
     lexeme: String,
     literal: String,
     line: i32,
 }
 
 impl token {
-    fn new(type: token_type, lexeme: String, literal: String, line: i32) -> &self {
-        self.type = type,
+    fn new(ttype: token_type, lexeme: String, literal: String, line: i32) -> &self {
+        self.ttype = ttype,
         self.lexeme = lexeme,
         self.lteral = literal,
         self.line = line,
     }
 
     fn to_string() -> &String {
-        return (type + " " + lexeme + " "+ literal);
+        return (ttype + " " + lexeme + " "+ literal);
     }
 }
 
