@@ -64,7 +64,7 @@ enum token_type {
     EOF,
 }
 
-enum token {
+struct token {
     ttype: token_type,
     lexeme: String,
     literal: String,

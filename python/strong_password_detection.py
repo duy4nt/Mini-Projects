@@ -1,4 +1,11 @@
+import re
+
+password_re = re.compile(r'[a-zA-Z]([a-z]*[A-Z]*[0-9]+[_.@$]+){8, }')
+
 passord = input("Enter the password: ")
+print(passord)
 
-
-# TODO: Make a regex that ensures that the password we are using is strong enouhg. A strong password has several rules: it must be at least eight characters long, contain both uppercase and lowercase characters, and have at least one digit.
+if len(password_re.findall(passord)):
+    print("sounds good")
+else:
+    print("lets try that once more")
