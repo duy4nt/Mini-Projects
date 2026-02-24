@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io;
 use std::io::Read;
 use std::path;
+use std::collections::HashMap;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -51,36 +52,48 @@ fn run(source : &mut String) {
     }
 }
 
-// TODO: Lexer
-fn lexer() {
-    
-}
-// TODO: Parser
+enum TokenType {
+    // Single character tokens
+    LEFT_BRACE, RIGHT_BRACE,
+    COMMA, DOT, COLON,
 
-enum token_type {
-    Bool,
-    Number,
-    String,
+    STRING, NUMBER,
+
     EOF,
 }
 
-struct token {
-    ttype: token_type,
+struct Lexer {
+    source: String,
+    tokens: HasMap
+}
+
+impl Lexer {
+    fn new(source: &mut String) {
+        //TODO
+    }
+
+    fn scanTokens() {
+        //TODO
+    }
+}
+
+struct Token {
+    tokentype: TokenType,
     lexeme: String,
     literal: String,
     line: i32,
 }
 
-impl token {
-    fn new(ttype: token_type, lexeme: String, literal: String, line: i32) -> &self {
-        self.ttype = ttype,
+impl Token {
+    fn new(tokentype: TokenType, lexeme: String, literal: String, line: i32) -> &self {
+        self.tokentype = tokentype,
         self.lexeme = lexeme,
         self.lteral = literal,
         self.line = line,
     }
 
     fn to_string() -> &String {
-        return (ttype + " " + lexeme + " "+ literal);
+        return tokentype + " " + lexeme + " "+ literal;
     }
 }
 

@@ -1,13 +1,11 @@
 import re, pyperclip
 
-# TODO: Take the text from the clipboard using pyperclip
-
-
+text = pyperclip.paste()
 
 # TODO: Make a regex that cleans the dates and formats them into single format
+dates = text.split('\n')
 
+for i in range(len(dates)):
+    
 
-
-
-
-# TODO: Write into the clipboard using the pyperclip
+pyperclip.copy(text)
