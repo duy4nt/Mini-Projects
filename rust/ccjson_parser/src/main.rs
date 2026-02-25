@@ -61,7 +61,7 @@ enum TokenType {
     Comma,
     Colon,
     // Literals
-    String,
+    StringLit,
     Number,
     //End of File
     EOF,
@@ -119,21 +119,42 @@ impl Lexer {
     }
 
     fn advance(&mut self) -> char {
-        let c = self.source[self.cuurent];
+        let c = self.source[self.current];
         self.current += 1;
         c
     }
 
     fn string(&mut self) {
-        //TODO
+        while !is_at_end() && self.source[self.current] != '"' {
+            if self.source[self.current] == '\n' {
+                self.line += 1;
+            }
+            
+            self.current += 1;
+        }
+
+        if self.is_at_end() {
+            eprintln!("unterminated string at line {}", self.line);
+            returnl
+        }
+
+        self.current += 1;
+        let literal: String = self.source[self.start + 1..self.current - 1].iter().collect();
+        self.add_token(TokneType::StringLit, literal)
     }
 
     fn number(&mut self) {
-        //TODO
+        while !self.is_at.end() && self.source[self.current].is_ascii_digit() {
+            self.current += 1;
+        } 
+
+        let literal: String = self.source[self.start..self.current].iter().collect();
+        self.add_token(TokenType::Number, literal);
     }
 
     fn addToken(&mut self, token_type: TokenType, literal: String) {
-        //TODO
+        let lexeme: String = self.source[self.start..self.cuurent].iter().collect();
+        self.token.push(Token::new(token_type, lexeme, literal, self.line));  
     }
 
     fn is_at_end(&mut self) -> bool {
